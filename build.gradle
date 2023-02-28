@@ -11,6 +11,12 @@ buildscript {
 
         leakcanary_android_version = '2.10'
         timber_version = '5.0.1'
+        hilt_navigation_compose_version = '1.0.0'
+        hilt_version = '2.45'
+
+        dependencies {
+            classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        }
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
