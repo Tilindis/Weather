@@ -62,4 +62,7 @@ dependencies {
 
     // Leakcanary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_android_version"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$timber_version"
 }
