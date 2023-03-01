@@ -6,6 +6,10 @@
 
 * Architecture
   - [x] MVVM
+
+* Design
+  - [x] [Jetpack Compose](https://developer.android.com/jetpack/compose)
+  - [x] [Accompanist](https://google.github.io/accompanist/pager/)
   
 * Dependency injection
   - [x] Hilt
