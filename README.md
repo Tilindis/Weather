@@ -10,7 +10,10 @@
 * Design
   - [x] [Jetpack Compose](https://developer.android.com/jetpack/compose)
   - [x] [Accompanist](https://google.github.io/accompanist/pager/)
-  
+
+* Concurrency
+  - [x] Coroutines
+
 * Dependency injection
   - [x] Hilt
 
