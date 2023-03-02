@@ -4,9 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 
 @Composable
-fun PageScreen(pageViewModel: PageViewModel = hiltViewModel()) {
+fun PageScreen(
+    pageViewModel: PageViewModel = hiltViewModel(),
+    navController: NavController
+) {
     val state: PageState by pageViewModel.state.observeAsState(PageState.empty())
 
     PageContent(state = state, {})
