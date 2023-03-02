@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalPagerApi::class)
+@file:OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class)
 
 package com.tilindis.weather.screen.page
 
@@ -20,7 +20,8 @@ import com.tilindis.weather.R
 @Composable
 fun PageContent(
     state: PageState,
-    onClick: () -> Unit
+    onCityClick: () -> Unit,
+    onLocaleClick: () -> Unit
 ) {
     val pagerState = rememberPagerState()
 
@@ -28,7 +29,11 @@ fun PageContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         WeatherPage(pagerState = pagerState)
-        WeatherPageNavigationBar(pagerState = pagerState, onClick = onClick)
+        WeatherPageNavigationBar(
+            pagerState = pagerState,
+            onCityClick = onCityClick,
+            onLocaleClick = onLocaleClick
+        )
         Spacer(modifier = Modifier.fillMaxSize())
     }
 }
@@ -53,7 +58,8 @@ private fun WeatherPage(
 @Composable
 private fun WeatherPageNavigationBar(
     pagerState: PagerState,
-    onClick: () -> Unit
+    onCityClick: () -> Unit,
+    onLocaleClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -66,7 +72,18 @@ private fun WeatherPageNavigationBar(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxSize()
-        ) { Text(text = "S", modifier = Modifier.align(Alignment.Center)) }
+        ) {
+            IconButton(onClick = onLocaleClick) {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .align(Alignment.Center),
+                    painter = painterResource(R.drawable.ic_launcher_foreground),
+                    contentDescription = null,
+                    tint = Color.Red
+                )
+            }
+        }
         Box(
             modifier = Modifier
                 .weight(4f)
@@ -84,7 +101,7 @@ private fun WeatherPageNavigationBar(
                 .weight(1f)
                 .fillMaxSize()
         ) {
-            IconButton(onClick = onClick) {
+            IconButton(onClick = onCityClick) {
                 Icon(
                     modifier = Modifier
                         .size(24.dp)
