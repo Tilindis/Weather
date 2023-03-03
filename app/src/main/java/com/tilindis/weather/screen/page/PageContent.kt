@@ -1,9 +1,10 @@
-@file:OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class)
+@file:OptIn(ExperimentalPagerApi::class)
 
 package com.tilindis.weather.screen.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -55,7 +56,14 @@ private fun WeatherPage(
         count = 5, //page.count(),
         state = pagerState
     ) { page ->
-        Text(text = "${state.weatherData.timezone} - ${page.toString()}")
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            item { Text(text = "${state.weatherData.timezone} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.latitude} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.longitude} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.currentWeather.temperature} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.hourly.temperature2m} - Temp") }
+            item { Text(text = "${state.weatherData.hourly.winddirection10m} - Wind") }
+        }
     }
 }
 
