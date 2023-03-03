@@ -28,7 +28,10 @@ fun PageContent(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        WeatherPage(pagerState = pagerState)
+        WeatherPage(
+            state = state,
+            pagerState = pagerState
+        )
         WeatherPageNavigationBar(
             pagerState = pagerState,
             onCityClick = onCityClick,
@@ -40,7 +43,8 @@ fun PageContent(
 
 @Composable
 private fun WeatherPage(
-    pagerState: PagerState,
+    state: PageState,
+    pagerState: PagerState
 ) {
     //val coroutineScope = rememberCoroutineScope()
     HorizontalPager(
@@ -48,10 +52,10 @@ private fun WeatherPage(
             .fillMaxWidth()
             .fillMaxHeight(0.92f)
             .background(Color.Cyan),
-        count = 5, //tutorialItems.count(),
+        count = 5, //page.count(),
         state = pagerState
     ) { page ->
-        Text(text = page.toString())
+        Text(text = "${state.weatherData.timezone} - ${page.toString()}")
     }
 }
 
