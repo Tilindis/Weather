@@ -1,4 +1,4 @@
-package com.tilindis.weather.utils
+package com.tilindis.weather.utils.other
 
 object Constants {
     const val DATASTORE_NAME = "DataStore"

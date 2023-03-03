@@ -1,6 +1,6 @@
 package com.tilindis.weather.utils.di
 
-import com.tilindis.weather.utils.Constants
+import com.tilindis.weather.utils.other.Constants
 import com.tilindis.weather.utils.api.WeatherService
 import dagger.Module
 import dagger.Provides
