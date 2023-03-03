@@ -1,9 +1,10 @@
-@file:OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class)
+@file:OptIn(ExperimentalPagerApi::class)
 
 package com.tilindis.weather.screen.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -28,7 +29,10 @@ fun PageContent(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        WeatherPage(pagerState = pagerState)
+        WeatherPage(
+            state = state,
+            pagerState = pagerState
+        )
         WeatherPageNavigationBar(
             pagerState = pagerState,
             onCityClick = onCityClick,
@@ -40,7 +44,8 @@ fun PageContent(
 
 @Composable
 private fun WeatherPage(
-    pagerState: PagerState,
+    state: PageState,
+    pagerState: PagerState
 ) {
     //val coroutineScope = rememberCoroutineScope()
     HorizontalPager(
@@ -48,10 +53,17 @@ private fun WeatherPage(
             .fillMaxWidth()
             .fillMaxHeight(0.92f)
             .background(Color.Cyan),
-        count = 5, //tutorialItems.count(),
+        count = 5, //page.count(),
         state = pagerState
     ) { page ->
-        Text(text = page.toString())
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            item { Text(text = "${state.weatherData.timezone} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.latitude} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.longitude} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.currentWeather.temperature} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.hourly.temperature2m} - Temp") }
+            item { Text(text = "${state.weatherData.hourly.winddirection10m} - Wind") }
+        }
     }
 }
 
