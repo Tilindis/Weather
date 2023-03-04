@@ -4,12 +4,16 @@ data class WeatherViewData(
     val timezone: String,
     val latitude: String,
     val longitude: String,
-    val currentWeather: CurrentWeatherViewData,
-    val hourly: HourlyViewData
+    val temperature: String,
+    val windspeed: String,
+    val winddirection: String,
+    val weathercode: String,
+    val time: String
+//    val hourly: HourlyViewData
 ) {
     companion object {
         private val EMPTY =
-            WeatherViewData("", "", "", CurrentWeatherViewData.empty(), HourlyViewData.empty())
+            WeatherViewData("", "", "", "", "", "", "", "")
 
         fun empty() = EMPTY
     }

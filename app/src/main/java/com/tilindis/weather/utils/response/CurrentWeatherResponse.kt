@@ -1,7 +1,6 @@
 package com.tilindis.weather.utils.response
 
 import com.squareup.moshi.Json
-import com.tilindis.weather.utils.domain.CurrentWeatherViewData
 
 data class CurrentWeatherResponse(
     @field:Json(name = "temperature")
@@ -22,15 +21,5 @@ data class CurrentWeatherResponse(
     companion object {
         private val EMPTY = CurrentWeatherResponse()
         fun empty() = EMPTY
-    }
-
-    fun toCurrentWeatherViewData(): CurrentWeatherViewData {
-        return CurrentWeatherViewData(
-            temperature = temperature ?: "",
-            windspeed = windspeed ?: "",
-            winddirection = winddirection ?: "",
-            weathercode = weathercode ?: "",
-            time = time ?: ""
-        )
     }
 }

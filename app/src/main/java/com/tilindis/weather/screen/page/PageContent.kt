@@ -60,9 +60,9 @@ private fun WeatherPage(
             item { Text(text = "${state.weatherData.timezone} - ${page.toString()}") }
             item { Text(text = "${state.weatherData.latitude} - ${page.toString()}") }
             item { Text(text = "${state.weatherData.longitude} - ${page.toString()}") }
-            item { Text(text = "${state.weatherData.currentWeather.temperature} - ${page.toString()}") }
-            item { Text(text = "${state.weatherData.hourly.temperature2m} - Temp") }
-            item { Text(text = "${state.weatherData.hourly.winddirection10m} - Wind") }
+            item { Text(text = "${state.weatherData.temperature} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.time } - Time") }
+            item { Text(text = "${state.weatherData.windspeed} - WindSpeed") }
         }
     }
 }

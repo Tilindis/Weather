@@ -1,18 +1,22 @@
 package com.tilindis.weather.utils.repository
 
 import com.tilindis.weather.utils.api.WeatherService
-import com.tilindis.weather.utils.domain.WeatherViewData
+import com.tilindis.weather.utils.dao.WeatherDao
+import com.tilindis.weather.utils.entity.WeatherEntity
+import kotlinx.coroutines.flow.Flow
 
 class WeatherRepository(
-    private val retrofitApi: WeatherService
+    private val weatherService: WeatherService,
+    private val weatherDao: WeatherDao,
 ) {
-    suspend fun getWeatherData(): WeatherViewData {
-        val weatherResponse = retrofitApi.getWeather()
+    val weatherFlow: Flow<WeatherEntity> = weatherDao.weatherFlow()
 
-        return if (weatherResponse.isSuccessful) {
-            weatherResponse.body()?.toWeatherViewData() ?: WeatherViewData.empty()
-        } else {
-            WeatherViewData.empty()
+    suspend fun loadWeather() =
+        runCatching { weatherService.getWeather() }.map {
+            it.body()
+        }.onSuccess {
+            weatherDao.deleteHourlyCityById(it?.toWeatherEntity()?.timezone ?: "")
+            weatherDao.insertWeather(it?.toWeatherEntity() ?: WeatherEntity.empty())
+            weatherDao.insertHourlyWeather(it?.toHourlyList() ?: listOf())
         }
-    }
 }
