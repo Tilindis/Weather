@@ -1,7 +1,6 @@
 package com.tilindis.weather.utils.response
 
 import com.squareup.moshi.Json
-import com.tilindis.weather.utils.domain.HourlyViewData
 
 data class HourlyResponse(
     @field:Json(name = "time")
@@ -16,13 +15,5 @@ data class HourlyResponse(
     companion object {
         private val EMPTY = HourlyResponse()
         fun empty() = EMPTY
-    }
-
-    fun toHourlyViewData(): HourlyViewData {
-        return HourlyViewData(
-            time = time ?: listOf(),
-            temperature2m = temperature2m ?: listOf(),
-            winddirection10m = winddirection10m ?: listOf()
-        )
     }
 }

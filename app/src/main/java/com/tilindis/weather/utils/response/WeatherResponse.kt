@@ -1,9 +1,8 @@
 package com.tilindis.weather.utils.response
 
 import com.squareup.moshi.Json
-import com.tilindis.weather.utils.domain.CurrentWeatherViewData
-import com.tilindis.weather.utils.domain.HourlyViewData
-import com.tilindis.weather.utils.domain.WeatherViewData
+import com.tilindis.weather.utils.entity.HourlyEntity
+import com.tilindis.weather.utils.entity.WeatherEntity
 
 data class WeatherResponse(
     @field:Json(name = "timezone")
@@ -26,14 +25,28 @@ data class WeatherResponse(
         fun empty() = EMPTY
     }
 
-    fun toWeatherViewData(): WeatherViewData {
-        return WeatherViewData(
+    fun toWeatherEntity(): WeatherEntity {
+        return WeatherEntity(
             timezone = timezone ?: "",
             latitude = latitude ?: "",
             longitude = longitude ?: "",
-            currentWeather = currentWeather?.toCurrentWeatherViewData()
-                ?: CurrentWeatherViewData.empty(),
-            hourly = hourly?.toHourlyViewData() ?: HourlyViewData.empty()
+            temperature = currentWeather?.temperature ?: "",
+            windspeed = currentWeather?.windspeed ?: "",
+            winddirection = currentWeather?.winddirection ?: "",
+            weathercode = currentWeather?.weathercode ?: "",
+            time = currentWeather?.time ?: ""
         )
+    }
+
+    fun toHourlyList(): List<HourlyEntity> {
+        return hourly?.time?.take(24)?.map { time ->
+            HourlyEntity(
+                id = null,
+                timezone = timezone ?: "",
+                time = time,
+                temperature2m = hourly.temperature2m?.get(hourly.time.indexOf(time)) ?: "",
+                winddirection10m = hourly.winddirection10m?.get(hourly.time.indexOf(time)) ?: ""
+            )
+        } ?: emptyList()
     }
 }
