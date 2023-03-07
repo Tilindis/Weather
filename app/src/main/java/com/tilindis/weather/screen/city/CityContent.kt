@@ -12,5 +12,6 @@ fun CityContent(state: CityState) {
         .fillMaxSize())
     {
         Text(text = state.cityId)
+        // Add list for cities
     }
 }
