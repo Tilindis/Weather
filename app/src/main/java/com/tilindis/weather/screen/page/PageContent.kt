@@ -56,11 +56,12 @@ private fun WeatherPage(
         count = 5, //page.count(),
         state = pagerState
     ) { page ->
+        // Replace to page content
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item { Text(text = "${state.weatherData.timezone} - ${page.toString()}") }
-            item { Text(text = "${state.weatherData.latitude} - ${page.toString()}") }
-            item { Text(text = "${state.weatherData.longitude} - ${page.toString()}") }
-            item { Text(text = "${state.weatherData.temperature} - ${page.toString()}") }
+            item { Text(text = "${state.weatherData.latitude}") }
+            item { Text(text = "${state.weatherData.longitude}") }
+            item { Text(text = "${state.weatherData.temperature} - Temp") }
             item { Text(text = "${state.weatherData.time } - Time") }
             item { Text(text = "${state.weatherData.windspeed} - WindSpeed") }
         }

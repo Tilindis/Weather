@@ -3,6 +3,7 @@ package com.tilindis.weather.utils.repository
 import com.tilindis.weather.utils.api.WeatherService
 import com.tilindis.weather.utils.dao.WeatherDao
 import com.tilindis.weather.utils.entity.WeatherEntity
+import com.tilindis.weather.utils.other.citiesData
 import kotlinx.coroutines.flow.Flow
 
 class WeatherRepository(
@@ -11,9 +12,12 @@ class WeatherRepository(
 ) {
     val weatherFlow: Flow<WeatherEntity> = weatherDao.weatherFlow()
 
+    private val city = citiesData()[1]
+
     suspend fun loadWeather() =
-        runCatching { weatherService.getWeather() }.map {
-            it.body()
+        // Problema paduodant data čia. Su hard code kordinatėmis veikia requestas
+        runCatching { weatherService.getWeather(latitude = city.latitude, longitude = city.longitude) }.map {
+            it.body()?.copy(timezone = city.name)
         }.onSuccess {
             weatherDao.deleteHourlyCityById(it?.toWeatherEntity()?.timezone ?: "")
             weatherDao.insertWeather(it?.toWeatherEntity() ?: WeatherEntity.empty())
