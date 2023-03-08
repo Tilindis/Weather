@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tilindis.weather.utils.usecase.WeatherUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,10 +20,20 @@ class PageViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             //weatherUseCase.loadWeather()
+            //loadCurrentWeatherData()
+            loadHourlyData()
+        }
+    }
 
-            weatherUseCase.weatherFlow.collect {
-                updateState { copy(weatherData = it.map { page -> page.toWeatherViewData() }) }
-            }
+    private suspend fun loadCurrentWeatherData(){
+        weatherUseCase.weatherFlow.collect {
+            updateState { copy(weatherData = it.map { page -> page.toWeatherViewData() }) }
+        }
+    }
+
+    private suspend fun loadHourlyData(){
+        weatherUseCase.weatherHourlyFlow.collect{
+            updateState { copy(hourlyData = it.map { hour -> hour.toHourlyViewData()}) }
         }
     }
 

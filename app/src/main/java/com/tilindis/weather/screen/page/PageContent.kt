@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,17 +47,17 @@ private fun WeatherPage(
     state: PageState,
     pagerState: PagerState
 ) {
-    //val coroutineScope = rememberCoroutineScope()
     HorizontalPager(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(0.92f)
             .background(Color.Cyan),
-        count = state.weatherData.count(),
+        count = 1, // state.weatherData.count(),
         state = pagerState
     ) { page ->
-        PageCard(weatherData = state.weatherData[page])
-
+        val hourlyData = state.hourlyData //state.hourlyData.filter { it.timezone == state.weatherData[page].timezone }
+        Text(text = hourlyData.count().toString() + " - Count")
+    //PageCard(weatherData = state.weatherData[page], hourlyData = hourlyData)
     }
 }
 
