@@ -12,11 +12,10 @@ class WeatherRepository(
 ) {
     val weatherFlow: Flow<WeatherEntity> = weatherDao.weatherFlow()
 
-    private val city = citiesData()[1]
+    private val city = citiesData()[4]
 
     suspend fun loadWeather() =
-        // Problema paduodant data čia. Su hard code kordinatėmis veikia requestas
-        runCatching { weatherService.getWeather(latitude = city.latitude, longitude = city.longitude) }.map {
+        runCatching { weatherService.getWeather(lat = city.latitude, long = city.longitude) }.map {
             it.body()?.copy(timezone = city.name)
         }.onSuccess {
             weatherDao.deleteHourlyCityById(it?.toWeatherEntity()?.timezone ?: "")
