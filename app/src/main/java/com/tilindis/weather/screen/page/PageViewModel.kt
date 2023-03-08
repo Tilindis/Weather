@@ -18,10 +18,10 @@ class PageViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            weatherUseCase.loadWeather()
+            //weatherUseCase.loadWeather()
 
             weatherUseCase.weatherFlow.collect {
-                updateState { copy(weatherData = it.toWeatherViewData()) }
+                updateState { copy(weatherData = it.map { page -> page.toWeatherViewData() }) }
             }
         }
     }

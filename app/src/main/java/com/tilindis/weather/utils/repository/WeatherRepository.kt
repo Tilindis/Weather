@@ -10,7 +10,7 @@ class WeatherRepository(
     private val weatherService: WeatherService,
     private val weatherDao: WeatherDao,
 ) {
-    val weatherFlow: Flow<WeatherEntity> = weatherDao.weatherFlow()
+    val weatherFlow: Flow<List<WeatherEntity>> = weatherDao.weatherFlow()
 
     private val city = citiesData()[4]
 

@@ -4,11 +4,9 @@ package com.tilindis.weather.screen.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
 import com.tilindis.weather.R
+import com.tilindis.weather.utils.ui.card.PageCard
 
 @Composable
 fun PageContent(
@@ -53,18 +52,11 @@ private fun WeatherPage(
             .fillMaxWidth()
             .fillMaxHeight(0.92f)
             .background(Color.Cyan),
-        count = 5, //page.count(),
+        count = state.weatherData.count(),
         state = pagerState
     ) { page ->
-        // Replace to page content
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            item { Text(text = "${state.weatherData.timezone} - ${page.toString()}") }
-            item { Text(text = "${state.weatherData.latitude}") }
-            item { Text(text = "${state.weatherData.longitude}") }
-            item { Text(text = "${state.weatherData.temperature} - Temp") }
-            item { Text(text = "${state.weatherData.time } - Time") }
-            item { Text(text = "${state.weatherData.windspeed} - WindSpeed") }
-        }
+        PageCard(weatherData = state.weatherData[page])
+
     }
 }
 

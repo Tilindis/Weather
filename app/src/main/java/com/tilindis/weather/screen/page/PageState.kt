@@ -4,12 +4,12 @@ import com.tilindis.weather.utils.domain.WeatherViewData
 
 data class PageState(
     val isPageOn: Boolean,
-    val weatherData: WeatherViewData
+    val weatherData: List<WeatherViewData> = emptyList()
 ) {
     companion object {
         private val EMPTY = PageState(
             isPageOn = false,
-            weatherData = WeatherViewData.empty()
+            weatherData = emptyList()
         )
 
         fun empty() = EMPTY
