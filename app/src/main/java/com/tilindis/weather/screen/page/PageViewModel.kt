@@ -20,14 +20,14 @@ class PageViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             //weatherUseCase.loadWeather()
-            //loadCurrentWeatherData()
-            loadHourlyData()
+            loadCurrentWeatherData()
         }
     }
 
     private suspend fun loadCurrentWeatherData(){
         weatherUseCase.weatherFlow.collect {
             updateState { copy(weatherData = it.map { page -> page.toWeatherViewData() }) }
+            loadHourlyData()
         }
     }
 

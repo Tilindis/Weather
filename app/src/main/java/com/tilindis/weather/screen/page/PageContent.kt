@@ -52,12 +52,12 @@ private fun WeatherPage(
             .fillMaxWidth()
             .fillMaxHeight(0.92f)
             .background(Color.Cyan),
-        count = 1, // state.weatherData.count(),
+        count = state.weatherData.count(),
         state = pagerState
     ) { page ->
-        val hourlyData = state.hourlyData //state.hourlyData.filter { it.timezone == state.weatherData[page].timezone }
-        Text(text = hourlyData.count().toString() + " - Count")
-    //PageCard(weatherData = state.weatherData[page], hourlyData = hourlyData)
+        val hourlyData = state.hourlyData.filter { it.timezone == state.weatherData[page].timezone }
+        val dailyData = hourlyData.take(24)
+        PageCard(weatherData = state.weatherData[page], hourlyData = hourlyData)
     }
 }
 
