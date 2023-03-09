@@ -8,4 +8,6 @@ class WeatherUseCase(
     suspend fun loadWeather() = weatherRepository.loadWeather()
 
     val weatherFlow = weatherRepository.weatherFlow
+
+    val weatherHourlyFlow = weatherRepository.weatherHourlyFlow
 }

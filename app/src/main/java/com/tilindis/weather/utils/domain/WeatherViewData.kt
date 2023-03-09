@@ -9,7 +9,6 @@ data class WeatherViewData(
     val winddirection: String,
     val weathercode: String,
     val time: String
-//    val hourly: HourlyViewData
 ) {
     companion object {
         private val EMPTY =

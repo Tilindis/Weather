@@ -4,7 +4,6 @@ package com.tilindis.weather.screen.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -17,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
 import com.tilindis.weather.R
+import com.tilindis.weather.utils.ui.card.PageCard
 
 @Composable
 fun PageContent(
@@ -47,24 +47,17 @@ private fun WeatherPage(
     state: PageState,
     pagerState: PagerState
 ) {
-    //val coroutineScope = rememberCoroutineScope()
     HorizontalPager(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(0.92f)
             .background(Color.Cyan),
-        count = 5, //page.count(),
+        count = state.weatherData.count(),
         state = pagerState
     ) { page ->
-        // Replace to page content
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            item { Text(text = "${state.weatherData.timezone} - ${page.toString()}") }
-            item { Text(text = "${state.weatherData.latitude}") }
-            item { Text(text = "${state.weatherData.longitude}") }
-            item { Text(text = "${state.weatherData.temperature} - Temp") }
-            item { Text(text = "${state.weatherData.time } - Time") }
-            item { Text(text = "${state.weatherData.windspeed} - WindSpeed") }
-        }
+        val hourlyData = state.hourlyData.filter { it.timezone == state.weatherData[page].timezone }
+        val dailyData = hourlyData.take(24)
+        PageCard(weatherData = state.weatherData[page], hourlyData = hourlyData)
     }
 }
 
