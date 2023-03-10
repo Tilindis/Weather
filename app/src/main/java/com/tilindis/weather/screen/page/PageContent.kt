@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,9 +54,9 @@ private fun WeatherPage(
         count = state.weatherData.count(),
         state = pagerState
     ) { page ->
-        val hourlyData = state.hourlyData.filter { it.timezone == state.weatherData[page].timezone }
-        val dailyData = hourlyData.take(24)
-        PageCard(weatherData = state.weatherData[page], hourlyData = hourlyData)
+        val weeklyData = state.hourlyData.filter { it.timezone == state.weatherData[page].timezone }
+        val hourlyData = weeklyData.take(24)
+        PageCard(weatherData = state.weatherData[page], weeklyData = weeklyData, hourlyData = hourlyData)
     }
 }
 

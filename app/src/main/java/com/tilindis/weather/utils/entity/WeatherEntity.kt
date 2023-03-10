@@ -11,10 +11,11 @@ data class WeatherEntity(
     @ColumnInfo(name = "latitude") val latitude: String,
     @ColumnInfo(name = "longitude") val longitude: String,
     @ColumnInfo(name = "temperature") val temperature: String,
-    @ColumnInfo(name = "windspeed") val windspeed: String,
-    @ColumnInfo(name = "winddirection") val winddirection: String,
-    @ColumnInfo(name = "weathercode") val weathercode: String,
-    @ColumnInfo(name = "time") val time: String,
+    @ColumnInfo(name = "wind_speed") val windSpeed: String,
+    @ColumnInfo(name = "wind_direction") val windDirection: String,
+    @ColumnInfo(name = "weather_code") val weatherCode: String,
+    @ColumnInfo(name = "last_update_time") val lastUpdateTime: String,
+    @ColumnInfo(name = "last_update_date") val lastUpdateDate: String,
 ){
     companion object {
         private val EMPTY = WeatherEntity(
@@ -22,10 +23,11 @@ data class WeatherEntity(
             latitude = "",
             longitude = "",
             temperature = "",
-            windspeed = "",
-            winddirection = "",
-            weathercode = "",
-            time = ""
+            windSpeed = "",
+            windDirection = "",
+            weatherCode = "",
+            lastUpdateTime = "",
+            lastUpdateDate = ""
         )
         fun empty() = EMPTY
     }
@@ -36,10 +38,11 @@ data class WeatherEntity(
             latitude = latitude,
             longitude = longitude,
             temperature = temperature,
-            windspeed = windspeed,
-            winddirection = winddirection,
-            weathercode = weathercode,
-            time = time
+            windSpeed = windSpeed,
+            windDirection = windDirection,
+            weatherCode = weatherCode,
+            lastUpdateTime = lastUpdateTime,
+            lastUpdateDate = lastUpdateDate
         )
     }
 }

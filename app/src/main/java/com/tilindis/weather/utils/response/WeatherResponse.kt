@@ -31,15 +31,16 @@ data class WeatherResponse(
             latitude = latitude ?: "",
             longitude = longitude ?: "",
             temperature = currentWeather?.temperature ?: "",
-            windspeed = currentWeather?.windspeed ?: "",
-            winddirection = currentWeather?.winddirection ?: "",
-            weathercode = currentWeather?.weathercode ?: "",
-            time = currentWeather?.time ?: ""
+            windSpeed = currentWeather?.windspeed ?: "",
+            windDirection = currentWeather?.winddirection ?: "",
+            weatherCode = currentWeather?.weathercode ?: "",
+            lastUpdateTime = "",
+            lastUpdateDate = ""
         )
     }
 
     fun toHourlyList(): List<HourlyEntity> {
-        return hourly?.time?.take(24)?.map { time ->
+        return hourly?.time?.map { time ->
             HourlyEntity(
                 id = null,
                 timezone = timezone ?: "",
