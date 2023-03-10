@@ -16,12 +16,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tilindis.weather.R
+import com.tilindis.weather.utils.calculation.TemperatureCalculation
 import com.tilindis.weather.utils.domain.HourlyViewData
 import com.tilindis.weather.utils.domain.WeatherViewData
-import com.tilindis.weather.utils.format.FormatDate
+import com.tilindis.weather.utils.format.DateFormatter
 
 @Composable
-fun PageCard(weatherData: WeatherViewData, hourlyData: List<HourlyViewData>) {
+fun PageCard(weatherData: WeatherViewData, weeklyData: List<HourlyViewData>, hourlyData: List<HourlyViewData>) {
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -34,9 +35,12 @@ fun PageCard(weatherData: WeatherViewData, hourlyData: List<HourlyViewData>) {
         HourCard(
             time = null,
             temperature = weatherData.temperature,
-            windDirection = weatherData.winddirection
+            windDirection = weatherData.windDirection
         )
         Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Last update time: " + weatherData.lastUpdateTime)
+        Text(text = "Last update Date: " + weatherData.lastUpdateDate)
 
         Card(
             modifier = Modifier
@@ -63,7 +67,7 @@ fun PageCard(weatherData: WeatherViewData, hourlyData: List<HourlyViewData>) {
                 ) {
                     items(hourlyData) { item ->
                         HourCard(
-                            time = FormatDate().getHour(item.time),
+                            time = DateFormatter().getOnlyHour(item.time),
                             temperature = item.temperature2m,
                             windDirection = item.winddirection10m
                         )
@@ -73,6 +77,8 @@ fun PageCard(weatherData: WeatherViewData, hourlyData: List<HourlyViewData>) {
         }
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        val calculatedWeeklyDate = TemperatureCalculation().calculateAverageWeekTemperature(weeklyData)
 
         Card(
             modifier = Modifier
@@ -97,66 +103,16 @@ fun PageCard(weatherData: WeatherViewData, hourlyData: List<HourlyViewData>) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     contentPadding = PaddingValues(horizontal = 16.dp)
                 ) {
-                    item{DayCard(day = "Monday", dayTemperature = "16", nightTemperature = "12")}
-                    item{DayCard(day = "Tuesday", dayTemperature = "12", nightTemperature = "12")}
-                    item{DayCard(day = "Another", dayTemperature = "14", nightTemperature = "13")}
-
+                    items(calculatedWeeklyDate) { item ->
+                        DayCard(
+                            day = item.dayName,
+                            dayTemperature = item.dayAverageTemperature.toString(),
+                            nightTemperature = item.nightAverageTemperature.toString()
+                        )
+                    }
                 }
             }
         }
-
         Spacer(modifier = Modifier.height(8.dp))
-
-        Text(text = weatherData.time + " - time")
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        val result = calculation(hourlyData)
-
-        Text(text = "$result - D/N SuperCalculation") // ${result[0].dayAverageTemp} - ${result[0].nightAverageTemp}
-
-        val dayResult = FormatDate().getDayName("2023-03-09T12:00")
-        Text(text = "$dayResult - Day result")
     }
 }
-
-@Composable
-private fun ComponentWrapper(content: @Composable () -> Unit) {
-    Card(
-        modifier = Modifier
-            .wrapContentSize()
-            .padding(4.dp)
-            .background(Color.Magenta),
-        shape = RoundedCornerShape(size = 12.dp)
-    ) {
-        content
-    }
-}
-
-private fun calculation(hourlyData: List<HourlyViewData>): List<AverageTemp> {
-    var dayAverageTemp = 0.0
-    var nightAverageTemp = 0.0
-
-    val dayNightTemps = mutableListOf<AverageTemp>()
-
-    for (dateTimeStr in hourlyData) {
-        val hourOfDay = FormatDate().getHour(dateTimeStr.time).toInt()
-        if (hourOfDay in 6..17) {
-            dayAverageTemp += dateTimeStr.temperature2m.toDouble()
-        } else {
-            nightAverageTemp += dateTimeStr.temperature2m.toDouble()
-        }
-
-        if(hourOfDay == 23){
-            val avgDayTemp = dayAverageTemp / 12
-            val avgNightTemp = nightAverageTemp / 12
-            dayNightTemps.add(AverageTemp(avgDayTemp, avgNightTemp))
-            dayAverageTemp = 0.0
-            nightAverageTemp = 0.0
-        }
-    }
-
-    return dayNightTemps
-}
-
-data class AverageTemp(val dayAverageTemp: Double, val nightAverageTemp: Double)

@@ -3,6 +3,7 @@ package com.tilindis.weather.utils.di
 import android.app.Application
 import com.tilindis.weather.utils.api.WeatherService
 import com.tilindis.weather.utils.dao.WeatherDao
+import com.tilindis.weather.utils.format.DateFormatter
 import com.tilindis.weather.utils.repository.WeatherRepository
 import com.tilindis.weather.utils.room.AppDatabase
 import com.tilindis.weather.utils.usecase.WeatherUseCase
@@ -30,8 +31,9 @@ class DataModule {
     @Provides
     fun provideRepository(
         apiService: WeatherService,
-        weatherDao: WeatherDao
-    ) = WeatherRepository(apiService, weatherDao)
+        weatherDao: WeatherDao,
+        dateFormatter: DateFormatter
+    ) = WeatherRepository(apiService, weatherDao, dateFormatter)
 
     @Singleton
     @Provides

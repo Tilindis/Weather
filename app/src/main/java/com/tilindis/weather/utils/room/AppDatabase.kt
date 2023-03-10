@@ -8,7 +8,7 @@ import com.tilindis.weather.utils.dao.WeatherDao
 import com.tilindis.weather.utils.entity.HourlyEntity
 import com.tilindis.weather.utils.entity.WeatherEntity
 
-@Database(entities = [WeatherEntity::class, HourlyEntity::class], version = 1)
+@Database(entities = [WeatherEntity::class, HourlyEntity::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
 
