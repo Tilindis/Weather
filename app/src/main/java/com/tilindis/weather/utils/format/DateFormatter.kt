@@ -3,13 +3,14 @@ package com.tilindis.weather.utils.format
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class FormatDate() {
+class DateFormatter @Inject constructor() {
     private val hourFormatter = SimpleDateFormat("HH:mm")
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
     private val fullDateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
 
-    fun getHour(date: String): String {
+    fun getOnlyHour(date: String): String {
         return date.split("T")[1].split(":")[0]
     }
 
