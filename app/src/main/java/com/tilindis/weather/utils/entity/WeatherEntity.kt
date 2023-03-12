@@ -3,6 +3,7 @@ package com.tilindis.weather.utils.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.tilindis.weather.utils.domain.CityViewData
 import com.tilindis.weather.utils.domain.WeatherViewData
 
 @Entity(tableName = "weather")
@@ -43,6 +44,15 @@ data class WeatherEntity(
             weatherCode = weatherCode,
             lastUpdateTime = lastUpdateTime,
             lastUpdateDate = lastUpdateDate
+        )
+    }
+
+    fun toCitiesViewData(): CityViewData {
+        return CityViewData(
+            name = timezone,
+            latitude = latitude,
+            longitude = longitude,
+            onScreen = true,
         )
     }
 }

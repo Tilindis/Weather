@@ -19,7 +19,6 @@ class PageViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            //weatherUseCase.loadWeather()
             loadCurrentWeatherData()
         }
     }

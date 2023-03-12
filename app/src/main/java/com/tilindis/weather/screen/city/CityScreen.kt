@@ -13,5 +13,5 @@ fun CityScreen(
 ) {
     val state: CityState by cityViewModel.state.observeAsState(CityState.empty())
 
-    CityContent(state)
+    CityContent(state = state, cityViewModel::updateCity)
 }

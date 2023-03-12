@@ -12,5 +12,5 @@ fun citiesData() =
 data class City(
     val name: String = "",
     val longitude: String = "",
-    val latitude: String = ""
+    val latitude: String = "",
 )
