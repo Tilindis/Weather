@@ -1,10 +1,11 @@
 package com.tilindis.weather.screen.locale
 
 data class LocaleState(
-    val autoUpdate: Boolean
-){
+    val isAutoUpdateOn: Boolean,
+    val isFahrenheitOn: Boolean
+) {
     companion object {
-        private val EMPTY = LocaleState(autoUpdate = false)
+        private val EMPTY = LocaleState(isAutoUpdateOn = false, isFahrenheitOn = false)
 
         fun empty() = EMPTY
     }

@@ -13,9 +13,12 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DataStore @Inject constructor(@ApplicationContext val context: Context) {
-    val getAutoUpdateValue: Flow<Boolean?> = context.dataStore.data
+    val getSettings: Flow<Settings> = context.dataStore.data
         .map { preferences ->
-            preferences[AUTO_UPDATE_KEY] ?: false
+            Settings(
+                preferences[AUTO_UPDATE_KEY] ?: false,
+                preferences[UNIT_KEY] ?: false
+            )
         }
 
     suspend fun setAutoUpdateValue(status: Boolean) {
@@ -24,12 +27,7 @@ class DataStore @Inject constructor(@ApplicationContext val context: Context) {
         }
     }
 
-    val getUnitValue: Flow<Boolean?> = context.dataStore.data
-        .map { preferences ->
-            preferences[UNIT_KEY] ?: false
-        }
-
-    suspend fun setUnitValue(status: Boolean) {
+    suspend fun setFahrenheitOn(status: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[UNIT_KEY] = status
         }
@@ -40,4 +38,6 @@ class DataStore @Inject constructor(@ApplicationContext val context: Context) {
         val AUTO_UPDATE_KEY = booleanPreferencesKey("key.is_auto_update_on")
         val UNIT_KEY = booleanPreferencesKey("key.is_unit_fahrenheit_on")
     }
+
+    data class Settings(val autoUpdate: Boolean, val unit: Boolean)
 }
