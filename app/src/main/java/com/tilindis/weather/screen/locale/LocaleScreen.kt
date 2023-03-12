@@ -9,5 +9,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun LocaleScreen(localeViewModel: LocaleViewModel = hiltViewModel()) {
     val state: LocaleState by localeViewModel.state.observeAsState(LocaleState.empty())
 
-    LocaleContent(state)
+    LocaleContent(
+        state = state,
+        onUnitClick = localeViewModel::setFahrenheitOn,
+        onAutoClick = localeViewModel::setAutoUpdateOn
+    )
 }
