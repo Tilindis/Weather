@@ -3,4 +3,8 @@
     <!--    Weather Card names -->
     <string name="weather_card_hourly_forecast_text">HOURLY FORECAST</string>
     <string name="weather_card_7_day_forecast_text">7-DAY FORECAST</string>
+    <!--    Locale variable names -->
+    <string name="locale_auto_update_text">Auto update</string>
+    <string name="locale_show_in_fahrenheit_text">Show in Fahrenheit</string>
+    <string name="locale_card_name_text">Locale</string>
 </resources>

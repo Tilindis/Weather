@@ -10,6 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tilindis.weather.R
@@ -20,32 +22,29 @@ fun LocaleContent(
     onAutoClick: (Boolean) -> Unit,
     onUnitClick: (Boolean) -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(300.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = state.isAutoUpdateOn.toString(),
-            fontSize = 60.sp
-        )
-    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .wrapContentSize(),
+        horizontalAlignment = Alignment.Start,
     ) {
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            text = stringResource(id = R.string.locale_card_name_text),
+            color = Color.White,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.W600,
+        )
         ValueEnableSection(
             isValueOn = state.isFahrenheitOn,
-            valueText = "Far",
+            valueText = stringResource(id = R.string.locale_show_in_fahrenheit_text),
             onValueButtonClick = onUnitClick
         )
         ValueEnableSection(
             isValueOn = state.isAutoUpdateOn,
-            valueText = "Auto",
+            valueText = stringResource(id = R.string.locale_auto_update_text),
             onValueButtonClick = onAutoClick
         )
     }
@@ -66,7 +65,7 @@ private fun ValueEnableSection(
     ) {
         IconButton(onClick = { onValueButtonClick.invoke(!isValueOn) }) {
             Icon(
-                modifier = Modifier.size(18.dp),
+                modifier = Modifier.size(24.dp),
                 painter = painterResource(id = iconResId),
                 contentDescription = null,
                 tint = MaterialTheme.colors.surface,
@@ -75,7 +74,7 @@ private fun ValueEnableSection(
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = valueText,
-            color = Color.Black
+            color = Color.White
         )
     }
 }
