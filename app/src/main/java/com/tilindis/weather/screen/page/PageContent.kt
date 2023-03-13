@@ -12,8 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.SwipeRefreshState
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.tilindis.weather.R
 import com.tilindis.weather.utils.ui.card.PageCard
 
@@ -21,23 +26,32 @@ import com.tilindis.weather.utils.ui.card.PageCard
 fun PageContent(
     state: PageState,
     onCityClick: () -> Unit,
-    onLocaleClick: () -> Unit
+    onLocaleClick: () -> Unit,
+    onRefresh: () -> Unit
 ) {
     val pagerState = rememberPagerState()
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(state.isLoading),
+        onRefresh = onRefresh,
+        indicator = { indicatorState, trigger ->
+            CustomIndicator(state = indicatorState, trigger = trigger)
+        }
     ) {
-        WeatherPage(
-            state = state,
-            pagerState = pagerState
-        )
-        WeatherPageNavigationBar(
-            pagerState = pagerState,
-            onCityClick = onCityClick,
-            onLocaleClick = onLocaleClick
-        )
-        Spacer(modifier = Modifier.fillMaxSize())
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            WeatherPage(
+                state = state,
+                pagerState = pagerState
+            )
+            WeatherPageNavigationBar(
+                pagerState = pagerState,
+                onCityClick = onCityClick,
+                onLocaleClick = onLocaleClick
+            )
+            Spacer(modifier = Modifier.fillMaxSize())
+        }
     }
 }
 
@@ -56,7 +70,11 @@ private fun WeatherPage(
     ) { page ->
         val weeklyData = state.hourlyData.filter { it.timezone == state.weatherData[page].timezone }
         val hourlyData = weeklyData.take(24)
-        PageCard(weatherData = state.weatherData[page], weeklyData = weeklyData, hourlyData = hourlyData)
+        PageCard(
+            weatherData = state.weatherData[page],
+            weeklyData = weeklyData,
+            hourlyData = hourlyData
+        )
     }
 }
 
@@ -119,3 +137,13 @@ private fun WeatherPageNavigationBar(
         }
     }
 }
+
+@Composable
+private fun CustomIndicator(state: SwipeRefreshState, trigger: Dp) =
+    SwipeRefreshIndicator(
+        state = state,
+        refreshTriggerDistance = trigger,
+        scale = true,
+        backgroundColor = MaterialTheme.colors.primaryVariant,
+        contentColor = MaterialTheme.colors.background,
+    )

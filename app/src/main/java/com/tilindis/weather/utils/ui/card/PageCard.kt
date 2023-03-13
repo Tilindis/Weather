@@ -20,6 +20,7 @@ import com.tilindis.weather.utils.calculation.TemperatureCalculation
 import com.tilindis.weather.utils.domain.HourlyViewData
 import com.tilindis.weather.utils.domain.WeatherViewData
 import com.tilindis.weather.utils.format.DateFormatter
+import kotlin.math.roundToInt
 
 @Composable
 fun PageCard(weatherData: WeatherViewData, weeklyData: List<HourlyViewData>, hourlyData: List<HourlyViewData>) {
@@ -34,7 +35,7 @@ fun PageCard(weatherData: WeatherViewData, weeklyData: List<HourlyViewData>, hou
         Text(text = weatherData.timezone)
         HourCard(
             time = null,
-            temperature = weatherData.temperature,
+            temperature = weatherData.temperature.toDouble().roundToInt().toString(),
             windDirection = weatherData.windDirection
         )
         Spacer(modifier = Modifier.height(8.dp))

@@ -39,10 +39,9 @@ fun PageScreen(
         Modifier.pointerInput(Unit) {
             detectTapGestures(onTap = {
                 scope.launch {
-                    if (scaffoldState.bottomSheetState.isCollapsed) {
-                        scaffoldState.bottomSheetState.expand()
-                    } else {
+                    if (scaffoldState.bottomSheetState.isExpanded) {
                         scaffoldState.bottomSheetState.collapse()
+                        pageViewModel.onRefresh()
                     }
                 }
             })
@@ -59,6 +58,7 @@ fun PageScreen(
             state = state,
             onCityClick = { navigateTo(navController) },
             onLocaleClick = { scope.launch { sheetState.expand() } },
+            onRefresh = pageViewModel::onRefresh
         )
     }
 }
