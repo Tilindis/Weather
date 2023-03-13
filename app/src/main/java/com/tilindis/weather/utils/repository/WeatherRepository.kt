@@ -5,7 +5,6 @@ import com.tilindis.weather.utils.dao.WeatherDao
 import com.tilindis.weather.utils.entity.HourlyEntity
 import com.tilindis.weather.utils.entity.WeatherEntity
 import com.tilindis.weather.utils.format.DateFormatter
-import com.tilindis.weather.utils.other.citiesData
 import kotlinx.coroutines.flow.Flow
 
 class WeatherRepository(
@@ -17,13 +16,11 @@ class WeatherRepository(
 
     val weatherHourlyFlow: Flow<List<HourlyEntity>> = weatherDao.weatherHourlyFlow()
 
-    private val city = citiesData()[0]
-
-    suspend fun loadWeather() =
-        runCatching { weatherService.getWeather(lat = city.latitude, long = city.longitude) }.map {
-            it.body()?.copy(timezone = city.name)
+    suspend fun loadWeather(cityName: String, latitude: String, longitude: String) =
+        runCatching { weatherService.getWeather(lat = latitude, long = longitude) }.map {
+            it.body()?.copy(timezone = cityName)
         }.onSuccess {
-            weatherDao.deleteHourlyCityById(it?.toWeatherEntity()?.timezone ?: "")
+            weatherDao.deleteHourlyCityByCityName(it?.toWeatherEntity()?.timezone ?: "")
             weatherDao.insertWeather(
                 it?.toWeatherEntity()?.copy(
                     lastUpdateTime = dateFormatter.getCurrentTime(),
@@ -33,4 +30,9 @@ class WeatherRepository(
             )
             weatherDao.insertHourlyWeather(it?.toHourlyList() ?: listOf())
         }
+
+    suspend fun deleteFullCityData(cityName: String){
+        weatherDao.deleteWeatherByCityName(cityName)
+        weatherDao.deleteHourlyCityByCityName(cityName)
+    }
 }

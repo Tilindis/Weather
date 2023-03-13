@@ -13,6 +13,9 @@ interface WeatherDao {
     @Query("SELECT * FROM weather")
     fun weatherFlow(): Flow<List<WeatherEntity>>
 
+    @Query("DELETE FROM weather WHERE timezone = :timezone")
+    suspend fun deleteWeatherByCityName(timezone: String)
+
     @Query("SELECT * FROM hourly")
     fun weatherHourlyFlow(): Flow<List<HourlyEntity>>
 
@@ -23,5 +26,5 @@ interface WeatherDao {
     suspend fun insertHourlyWeather(hourly: List<HourlyEntity>)
 
     @Query("DELETE FROM hourly WHERE timezone = :timezone")
-    suspend fun deleteHourlyCityById(timezone: String)
+    suspend fun deleteHourlyCityByCityName(timezone: String)
 }

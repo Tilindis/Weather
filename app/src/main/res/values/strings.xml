@@ -8,5 +8,6 @@
     <string name="locale_show_in_fahrenheit_text">Show in Fahrenheit</string>
     <string name="locale_card_name_text">Locale</string>
     <!--    Cities variable names -->
-    <string name="city_card_name_text">Cities</string>
+    <string name="city_card_name_text">Online Cities</string>
+    <string name="city_offline_card_name_text">Cities</string>
 </resources>

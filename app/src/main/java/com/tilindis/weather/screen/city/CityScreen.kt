@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.tilindis.weather.screen.Screen
 
 @Composable
 fun CityScreen(
@@ -13,5 +14,14 @@ fun CityScreen(
 ) {
     val state: CityState by cityViewModel.state.observeAsState(CityState.empty())
 
-    CityContent(state = state, cityViewModel::updateCity)
+    CityContent(
+        state = state,
+        onCityClick = cityViewModel::updateCity,
+        onBack = { navigateTo(navController) },
+        onUpdate = cityViewModel::loadCities
+    )
+}
+
+private fun navigateTo(navController: NavController) {
+    navController.navigate(Screen.Page.route)
 }
