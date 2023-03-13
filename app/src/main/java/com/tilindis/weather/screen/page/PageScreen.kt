@@ -43,6 +43,7 @@ fun PageScreen(
                         scaffoldState.bottomSheetState.expand()
                     } else {
                         scaffoldState.bottomSheetState.collapse()
+                        pageViewModel.onRefresh()
                     }
                 }
             })
