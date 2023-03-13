@@ -4,6 +4,7 @@ import com.tilindis.weather.utils.domain.HourlyViewData
 import com.tilindis.weather.utils.domain.WeatherViewData
 
 data class PageState(
+    val isLoading: Boolean = false,
     val isAutoUpdateOn: Boolean,
     val isAutoUpdated: Boolean,
     val isFahrenheitOn: Boolean,

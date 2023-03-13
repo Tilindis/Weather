@@ -24,9 +24,14 @@ class PageViewModel @Inject constructor(
     }
 
     fun onRefresh(){
+        updateLoadingState(isLoading = true)
         viewModelScope.launch {
             getSettings()
         }
+    }
+
+    private fun updateLoadingState(isLoading: Boolean) {
+        updateState { copy(isLoading = isLoading) }
     }
 
     private suspend fun getSettings() {
@@ -70,7 +75,7 @@ class PageViewModel @Inject constructor(
             } else {
                 hourlyData
             }
-            updateState { copy(hourlyData = convertedData) }
+            updateState { copy(hourlyData = convertedData, isLoading = false) }
         }
     }
 
