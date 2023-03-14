@@ -3,13 +3,10 @@ package com.tilindis.weather.utils.ui.card
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,7 +26,7 @@ fun HourCard(time: String?, temperature: String, windDirection: String) {
             verticalArrangement = Arrangement.Center
         ) {
             if (!time.isNullOrEmpty()) {
-                timeData(time = time)
+                TimeData(time = time)
             }
             Text(
                 text = "${temperature.toDouble().roundToInt()}°",
@@ -42,14 +39,7 @@ fun HourCard(time: String?, temperature: String, windDirection: String) {
                 if (time.isNullOrEmpty()) {
                     WindIcon()
                 }
-                IconTemplate(iconResource = R.drawable.wind_indicator, rotation = windDirection)
-//                Icon(
-//                    modifier = Modifier
-//                        .size(32.dp)
-//                        .rotate(windDirection.toFloat()),
-//                    painter = painterResource(R.drawable.wind_arrow),
-//                    contentDescription = "Wind Arrow"
-//                )
+                IconTemplate(iconResource = R.drawable.wind_arrow, rotation = windDirection)
             }
         }
     }
@@ -62,7 +52,7 @@ private fun WindIcon() {
 }
 
 @Composable
-private fun timeData(time: String) {
+private fun TimeData(time: String) {
     Spacer(modifier = Modifier.width(width = 8.dp))
     Text(
         text = time,
