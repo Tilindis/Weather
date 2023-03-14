@@ -4,16 +4,12 @@ package com.tilindis.weather.screen.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
@@ -21,6 +17,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.tilindis.weather.R
 import com.tilindis.weather.utils.ui.bar.BottomBar
+import com.tilindis.weather.utils.ui.card.EmptyArea
 import com.tilindis.weather.utils.ui.card.PageCard
 
 @Composable
@@ -53,7 +50,11 @@ fun PageContent(
                 onLeftButtonClick = onLocaleClick,
                 onRightButtonClick = onCityClick
             )
-            Spacer(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.primaryVariant))
+            Spacer(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colors.primaryVariant)
+            )
         }
     }
 }
@@ -63,21 +64,33 @@ private fun WeatherPage(
     state: PageState,
     pagerState: PagerState
 ) {
-    HorizontalPager(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.92f)
-            .background(Color.Cyan),
-        count = state.weatherData.count(),
-        state = pagerState
-    ) { page ->
-        val weeklyData = state.hourlyData.filter { it.timezone == state.weatherData[page].timezone }
-        val hourlyData = weeklyData.take(24)
-        PageCard(
-            weatherData = state.weatherData[page],
-            weeklyData = weeklyData,
-            hourlyData = hourlyData
-        )
+
+    if(state.weatherData.isNotEmpty()){
+        HorizontalPager(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.92f)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            MaterialTheme.colors.primary,
+                            MaterialTheme.colors.primaryVariant
+                        )
+                    )
+                ),
+            count = state.weatherData.count(),
+            state = pagerState
+        ) { page ->
+            val weeklyData = state.hourlyData.filter { it.timezone == state.weatherData[page].timezone }
+            val hourlyData = weeklyData.take(24)
+            PageCard(
+                weatherData = state.weatherData[page],
+                weeklyData = weeklyData,
+                hourlyData = hourlyData
+            )
+        }
+    } else {
+        EmptyArea()
     }
 }
 
