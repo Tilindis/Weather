@@ -20,6 +20,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.tilindis.weather.R
+import com.tilindis.weather.utils.ui.bar.BottomBar
 import com.tilindis.weather.utils.ui.card.PageCard
 
 @Composable
@@ -45,12 +46,14 @@ fun PageContent(
                 state = state,
                 pagerState = pagerState
             )
-            WeatherPageNavigationBar(
+            BottomBar(
                 pagerState = pagerState,
-                onCityClick = onCityClick,
-                onLocaleClick = onLocaleClick
+                rightIconResource = R.drawable.bottom_bar_list,
+                leftIconResource = R.drawable.bottom_bar_settings,
+                onLeftButtonClick = onLocaleClick,
+                onRightButtonClick = onCityClick
             )
-            Spacer(modifier = Modifier.fillMaxSize())
+            Spacer(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.primaryVariant))
         }
     }
 }
@@ -75,66 +78,6 @@ private fun WeatherPage(
             weeklyData = weeklyData,
             hourlyData = hourlyData
         )
-    }
-}
-
-@Composable
-private fun WeatherPageNavigationBar(
-    pagerState: PagerState,
-    onCityClick: () -> Unit,
-    onLocaleClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .background(color = MaterialTheme.colors.primary)
-            .fillMaxWidth()
-            .height(40.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxSize()
-        ) {
-            IconButton(onClick = onLocaleClick) {
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center),
-                    painter = painterResource(R.drawable.ic_launcher_foreground),
-                    contentDescription = null,
-                    tint = Color.Red
-                )
-            }
-        }
-        Box(
-            modifier = Modifier
-                .weight(4f)
-        ) {
-            HorizontalPagerIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                pagerState = pagerState,
-                activeColor = MaterialTheme.colors.primaryVariant,
-                indicatorWidth = 8.dp,
-                inactiveColor = Color.Green,
-            )
-        }
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxSize()
-        ) {
-            IconButton(onClick = onCityClick) {
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center),
-                    painter = painterResource(R.drawable.ic_launcher_foreground),
-                    contentDescription = null,
-                    tint = Color.Red
-                )
-            }
-        }
     }
 }
 

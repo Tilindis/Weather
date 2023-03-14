@@ -9,7 +9,6 @@ import com.tilindis.weather.utils.usecase.WeatherUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 @HiltViewModel
 class PageViewModel @Inject constructor(
@@ -84,6 +83,6 @@ class PageViewModel @Inject constructor(
     }
 
     private fun toFahrenheit(temperature: String): String {
-        return (temperature.toDouble() * 1.8 + 32).roundToInt().toString()
+        return (temperature.toDouble() * 1.8 + 32).toString()
     }
 }

@@ -34,7 +34,7 @@ fun CityCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
-            IconTemplate(iconResource = iconResId)
+            IconTemplate(iconResource = iconResId, null)
             Spacer(modifier = Modifier.width(width = 48.dp))
             Text(text = city.name)
         }
