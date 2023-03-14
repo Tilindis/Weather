@@ -7,10 +7,12 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -23,12 +25,22 @@ import com.tilindis.weather.utils.format.DateFormatter
 import kotlin.math.roundToInt
 
 @Composable
-fun PageCard(weatherData: WeatherViewData, weeklyData: List<HourlyViewData>, hourlyData: List<HourlyViewData>) {
+fun PageCard(
+    weatherData: WeatherViewData,
+    weeklyData: List<HourlyViewData>,
+    hourlyData: List<HourlyViewData>
+) {
     Column(
         modifier = Modifier
-            .padding(16.dp)
             .fillMaxSize()
-            .background(Color.Red),
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        MaterialTheme.colors.primary,
+                        MaterialTheme.colors.primaryVariant
+                    )
+                )
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(16.dp))
@@ -39,10 +51,18 @@ fun PageCard(weatherData: WeatherViewData, weeklyData: List<HourlyViewData>, hou
             windDirection = weatherData.windDirection
         )
         Spacer(modifier = Modifier.height(8.dp))
-
-        Text(text = "Last update time: " + weatherData.lastUpdateTime)
-        Text(text = "Last update Date: " + weatherData.lastUpdateDate)
-
+        Text(
+            text = stringResource(
+                id = R.string.weather_card_last_update_time_text,
+                weatherData.lastUpdateTime
+            )
+        )
+        Text(
+            text = stringResource(
+                id = R.string.weather_card_last_update_date_text,
+                weatherData.lastUpdateDate
+            )
+        )
         Card(
             modifier = Modifier
                 .wrapContentSize()
@@ -76,10 +96,9 @@ fun PageCard(weatherData: WeatherViewData, weeklyData: List<HourlyViewData>, hou
                 }
             }
         }
-
         Spacer(modifier = Modifier.height(8.dp))
-
-        val calculatedWeeklyDate = TemperatureCalculation().calculateAverageWeekTemperature(weeklyData)
+        val calculatedWeeklyDate =
+            TemperatureCalculation().calculateAverageWeekTemperature(weeklyData)
 
         Card(
             modifier = Modifier
