@@ -5,6 +5,7 @@
     <string name="weather_card_7_day_forecast_text">7-DAY FORECAST</string>
     <string name="weather_card_last_update_time_text">Last update time: %s</string>
     <string name="weather_card_last_update_date_text">Last update date: %s</string>
+    <string name="weather_card_data_is_empty_text">Weather data is empty</string>
     <!--    Locale variable names -->
     <string name="locale_auto_update_text">Auto update</string>
     <string name="locale_show_in_fahrenheit_text">Show in Fahrenheit</string>
